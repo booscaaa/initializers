@@ -1,0 +1,17 @@
+# Golang specific ignores
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+*.a
+*.o
+*.cgo
+*.cgo1.go
+*.cgo2.c
+*.cgo2.cgo1.go
+*.cgo2.cgo2.c
+
+go.sum
