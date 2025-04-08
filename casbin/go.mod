@@ -5,7 +5,7 @@ go 1.23.3
 require (
 	github.com/casbin/casbin/v2 v2.103.0
 	github.com/casbin/xorm-adapter/v3 v3.4.0
-	github.com/cgisoftware/initializers/auth v1.0.1
+	github.com/booscaaa/initializers/auth v1.0.1
 )
 
 require (

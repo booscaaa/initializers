@@ -3,7 +3,7 @@ package casbin
 import (
 	"net/http"
 
-	"github.com/cgisoftware/initializers/auth"
+	"github.com/booscaaa/initializers/auth"
 )
 
 func (casbinConfig *CasbinConfig) Middleware(contextValue auth.ContextValue) func(next http.Handler) http.Handler {
