@@ -15,3 +15,5 @@
 *.cgo2.cgo2.c
 
 go.sum
+
+.agent/rules
