@@ -1,4 +1,4 @@
-module github.com/cgisoftware/initializers/opentelemetry
+module github.com/booscaaa/initializers/opentelemetry
 
 go 1.25.4
 

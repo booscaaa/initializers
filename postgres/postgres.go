@@ -8,8 +8,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/cgisoftware/initializers/postgres/types"
-	"github.com/cgisoftware/initializers/postgres/uow"
+	"github.com/booscaaa/initializers/postgres/types"
+	"github.com/booscaaa/initializers/postgres/uow"
 
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/jmoiron/sqlx"

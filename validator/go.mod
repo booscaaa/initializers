@@ -1,4 +1,4 @@
-module github.com/cgisoftware/initializers/validator
+module github.com/booscaaa/initializers/validator
 
 go 1.25.4
 

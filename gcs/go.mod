@@ -1,4 +1,4 @@
-module github.com/cgisoftware/initializers/gcs
+module github.com/booscaaa/initializers/gcs
 
 go 1.25.4
 

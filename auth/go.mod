@@ -1,4 +1,4 @@
-module github.com/cgisoftware/initializers/auth
+module github.com/booscaaa/initializers/auth
 
 go 1.25.4
 

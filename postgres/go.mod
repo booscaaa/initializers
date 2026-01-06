@@ -1,4 +1,4 @@
-module github.com/cgisoftware/initializers/postgres
+module github.com/booscaaa/initializers/postgres
 
 go 1.25.4
 

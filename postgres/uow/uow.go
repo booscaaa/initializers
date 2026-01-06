@@ -5,7 +5,7 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/cgisoftware/initializers/postgres/types"
+	"github.com/booscaaa/initializers/postgres/types"
 	"github.com/jmoiron/sqlx"
 )
 

@@ -20,7 +20,7 @@ package main
 
 import (
     "context"
-    "github.com/cgisoftware/initializers/opentelemetry"
+    "github.com/booscaaa/initializers/opentelemetry"
 )
 
 func main() {
@@ -33,7 +33,7 @@ func main() {
         MaxBodySize:     1024,
         ServiceName:     "meu-servico",
     }
-    
+
     // Inicializa o logger global
     opentelemetry.InitializeStructuredLogger(config)
 }
@@ -81,22 +81,22 @@ opentelemetry.Fatal(ctx, "Erro crítico", err, nil)
 // Usando middleware (recomendado)
 func setupServer() {
     logger := opentelemetry.GetStructuredLogger()
-    
+
     mux := http.NewServeMux()
     mux.HandleFunc("/api/users", handleUsers)
-    
+
     // Aplica middleware de logging
     handler := opentelemetry.HTTPLoggingMiddleware(logger)(mux)
-    
+
     http.ListenAndServe(":8080", handler)
 }
 
 // Ou log manual
 func handleRequest(w http.ResponseWriter, r *http.Request) {
     start := time.Now()
-    
+
     // ... processa requisição ...
-    
+
     duration := time.Since(start)
     opentelemetry.LogHTTPRequest(r.Context(), r, 200, duration, "response body")
 }
@@ -107,12 +107,12 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 ```go
 func executeQuery(ctx context.Context, query string, args ...interface{}) {
     start := time.Now()
-    
+
     // ... executa query ...
-    
+
     duration := time.Since(start)
     rowsAffected := int64(1)
-    
+
     opentelemetry.LogDatabaseQuery(ctx, query, args, duration, rowsAffected, nil)
 }
 ```
@@ -125,7 +125,7 @@ func createUser(ctx context.Context, userID string, email string) {
         "email": email,
         "role":  "user",
     }
-    
+
     opentelemetry.LogBusinessOperation(
         ctx,
         "user_creation",
@@ -361,13 +361,13 @@ import (
     "context"
     "net/http"
     "time"
-    
-    "github.com/cgisoftware/initializers/opentelemetry"
+
+    "github.com/booscaaa/initializers/opentelemetry"
 )
 
 func main() {
     ctx := context.Background()
-    
+
     // 1. Inicializa OpenTelemetry
     shutdown, err := opentelemetry.Initialize(
         ctx,
@@ -378,28 +378,28 @@ func main() {
         panic(err)
     }
     defer shutdown(ctx)
-    
+
     // 2. Configura logger estruturado
     opentelemetry.InitializeStructuredLogger(&opentelemetry.LoggerConfig{
         Level:       opentelemetry.INFO,
         ServiceName: "api-service",
     })
-    
+
     // 3. Configura servidor HTTP com middleware
     logger := opentelemetry.GetStructuredLogger()
-    
+
     mux := http.NewServeMux()
     mux.HandleFunc("/api/users", handleUsers)
-    
+
     handler := opentelemetry.HTTPLoggingMiddleware(logger)(mux)
-    
+
     opentelemetry.Info(ctx, "Servidor iniciado na porta 8080", nil)
     http.ListenAndServe(":8080", handler)
 }
 
 func handleUsers(w http.ResponseWriter, r *http.Request) {
     ctx := r.Context()
-    
+
     // Log de operação de negócio
     opentelemetry.LogBusinessOperation(
         ctx,
@@ -410,12 +410,12 @@ func handleUsers(w http.ResponseWriter, r *http.Request) {
         nil,
         nil,
     )
-    
+
     // Simula query de banco
     start := time.Now()
     // ... executa query ...
     duration := time.Since(start)
-    
+
     opentelemetry.LogDatabaseQuery(
         ctx,
         "SELECT * FROM users",
@@ -424,7 +424,7 @@ func handleUsers(w http.ResponseWriter, r *http.Request) {
         10,
         nil,
     )
-    
+
     w.Header().Set("Content-Type", "application/json")
     w.WriteHeader(http.StatusOK)
     w.Write([]byte(`{"users": []}`))
@@ -456,19 +456,22 @@ Os logs são estruturados em JSON:
 ## Migração da API Antiga
 
 ### Antes
+
 ```go
-opentelemetry.ErrorLog(ctx, "Erro", err, 
+opentelemetry.ErrorLog(ctx, "Erro", err,
     opentelemetry.WithHttpLog(httpLog),
 )
 ```
 
 ### Depois
+
 ```go
 logger := opentelemetry.GetStructuredLogger()
 logger.Error(ctx, "Erro", err, httpLog)
 ```
 
 Ou usando funções globais:
+
 ```go
 opentelemetry.Error(ctx, "Erro", err, httpLog)
 ```
