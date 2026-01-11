@@ -61,20 +61,20 @@ type CryptService interface {
 
 // AuthMiddleware cria um middleware que verifica a autenticação
 // Se cryptService for fornecido, tentará descriptografar os valores antes de adicioná-los ao contexto
-func (a *Authenticator) AuthMiddleware(values ...ContextValue) func(next http.Handler) http.Handler {
-	return a.AuthMiddlewareWithCrypt(nil, values...)
+func (a *Authenticator) AuthMiddleware(cookieName string, values ...ContextValue) func(next http.Handler) http.Handler {
+	return a.AuthMiddlewareWithCrypt(nil, cookieName, values...)
 }
 
 // AuthMiddlewareWithCrypt cria um middleware que verifica a autenticação e opcionalmente descriptografa valores
 // Se cryptService for fornecido, tentará descriptografar os valores antes de adicioná-los ao contexto
-func (a *Authenticator) AuthMiddlewareWithCrypt(cryptService CryptService, values ...ContextValue) func(next http.Handler) http.Handler {
+func (a *Authenticator) AuthMiddlewareWithCrypt(cryptService CryptService, cookieName string, values ...ContextValue) func(next http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(response http.ResponseWriter, request *http.Request) {
 			headerToken := request.Header.Get("Authorization")
 
 			cookies := request.Cookies()
 			for _, cookie := range cookies {
-				if cookie.Name == "CIMSSESSIONTOKEN" {
+				if cookie.Name == cookieName {
 					headerToken = cookie.Value
 					break
 				}
